@@ -24,7 +24,7 @@ import com.MyTravel.mytravel.security.services.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-        // securedEnabled = true,
+//         securedEnabled = true,
         // jsr250Enabled = true,
         prePostEnabled = true)
 @RequiredArgsConstructor
@@ -69,13 +69,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/test/**").permitAll()
-                .anyRequest().authenticated();
-
+        // Allow all request by default, except for explicitly annotate @PreAuthorized
+        http.authorizeRequests().anyRequest().permitAll();
+        http
+                .csrf().disable()
+                .cors() // Must have
+                .and()
+                .logout().disable()
+                .formLogin().disable()
+                .httpBasic().disable();
+        http
+                .headers().cacheControl().disable()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//
+//        http.cors().and().csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+//                .antMatchers("/api/test/**").permitAll()
+//                .anyRequest().authenticated();
+//
+//        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//    }
 }
