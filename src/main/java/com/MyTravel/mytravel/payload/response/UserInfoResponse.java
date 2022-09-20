@@ -8,11 +8,14 @@ public class UserInfoResponse {
     private String email;
     private List<String> roles;
 
-    public UserInfoResponse(String id, String username, String email, List<String> roles) {
+    private String phone;
+
+    public UserInfoResponse(String id, String username, String email, String phone, List<String> roles) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.roles = roles;
+        this.phone = phone;
     }
 
     public String getId() {
@@ -41,5 +44,13 @@ public class UserInfoResponse {
 
     public List<String> getRoles() {
         return roles;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 }
