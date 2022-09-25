@@ -22,7 +22,7 @@ public class SignupRequest {
 
     @NotBlank
     @Size(max = 10)
-    private String phone;
+    private String phoneNumber;
 
     public String getUsername() {
         return username;
@@ -48,12 +48,12 @@ public class SignupRequest {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Set<String> getRoles() {
