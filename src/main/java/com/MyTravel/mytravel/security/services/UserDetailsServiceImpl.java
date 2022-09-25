@@ -1,5 +1,7 @@
 package com.MyTravel.mytravel.security.services;
 
+import com.MyTravel.mytravel.exception.ApiException;
+import com.MyTravel.mytravel.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username)
-				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+				.orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND));
 
 		return UserDetailsImpl.build(user);
 	}

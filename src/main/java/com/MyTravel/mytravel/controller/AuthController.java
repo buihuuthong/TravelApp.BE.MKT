@@ -1,5 +1,7 @@
 package com.MyTravel.mytravel.controller;
 
+import com.MyTravel.mytravel.exception.ApiException;
+import com.MyTravel.mytravel.exception.ErrorCode;
 import com.MyTravel.mytravel.model.ERole;
 import com.MyTravel.mytravel.model.Role;
 import com.MyTravel.mytravel.model.User;
@@ -11,6 +13,7 @@ import com.MyTravel.mytravel.repository.RoleRepository;
 import com.MyTravel.mytravel.repository.UserRepository;
 import com.MyTravel.mytravel.security.jwt.JwtUtils;
 import com.MyTravel.mytravel.security.services.UserDetailsImpl;
+import com.MyTravel.mytravel.util.CodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,12 +52,20 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
+		if (userRepository.existsByUsername(loginRequest.getUsername())) {
+			throw new ApiException(ErrorCode.USER_NOT_FOUND);
+		}
+
+		if (userRepository.existsByUsername(loginRequest.getPassword())) {
+			throw new ApiException(ErrorCode.WRONG_PASSWORD);
+		}
+
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
-		
+
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
@@ -71,15 +82,19 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Username is already taken!"));
+			throw new ApiException(ErrorCode.USERNAME_ALREADY_EXIST);
 		}
 
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Email is already in use!"));
+			throw new ApiException(ErrorCode.EMAIL_ALREADY_EXIST);
+		}
+
+		if (userRepository.existsByPhoneNumber(signUpRequest.getPhoneNumber())) {
+			throw new ApiException(ErrorCode.PHONE_ALREADY_EXIST);
+		}
+
+		if (CodeUtil.isNotValidPhone(signUpRequest.getPhoneNumber())) {
+			throw new ApiException(ErrorCode.INVALID_PHONE);
 		}
 
 		// Create new user's account
