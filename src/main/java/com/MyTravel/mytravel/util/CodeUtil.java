@@ -9,6 +9,7 @@ import org.springframework.validation.BindException;
 import javax.validation.ConstraintViolationException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -61,5 +62,23 @@ public class CodeUtil {
 
 	public static String createSearchLike(@Nullable String search) {
 		return Objects.isNull(search) ? "" : String.join("", "%", search.toLowerCase(), "%");
+	}
+	public static String generateRandomString() {
+		int SIZE = 10;
+		char[] CHARACTERS = {
+				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+				'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+				'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+				'u', 'v', 'w', 'x', 'y', 'z' };
+		Random random = new Random();
+		StringBuilder str = new StringBuilder();
+		for (int i = 0; i < SIZE; i++)
+			str.append(CHARACTERS[random.nextInt(CHARACTERS.length)]);
+		return str.toString();
+	}
+	public static String getFileNameExtension(String fileName) {
+		char FILE_EXTENSION_DELIMITER = '.';
+		int index = fileName.lastIndexOf(FILE_EXTENSION_DELIMITER);
+		return index == -1 ? "" : fileName.substring(index);
 	}
 }

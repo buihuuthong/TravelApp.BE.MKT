@@ -22,18 +22,26 @@ public enum ErrorCode {
 	// Application errors
 	WRONG_PASSWORD(HttpStatus.UNAUTHORIZED, "Wrong password"),
 	INVALID_PHONE(HttpStatus.BAD_REQUEST, "Phone is invalid"),
+
 	PHONE_NOT_FOUND(HttpStatus.NOT_FOUND, "Phone not found"),
+	TOUR_NOT_FOUND(HttpStatus.NOT_FOUND, "Tour not found"),
 	USERNAME_ALREADY_EXIST(HttpStatus.CONFLICT, "Username is already exists"),
 	PHONE_ALREADY_EXIST(HttpStatus.CONFLICT, "Phone is already exists"),
 	EMAIL_ALREADY_EXIST(HttpStatus.CONFLICT, "Email is already exists"),
-	MANAGER_NOT_FOUND(HttpStatus.NOT_FOUND, "Manager not found"),
+
+	TOUR_ALREADY_EXIST(HttpStatus.CONFLICT, "Tour is already exists"),
 	USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User not found"),
+
 	IMAGE_UPLOAD_FAILED(HttpStatus.CONFLICT, "Image upload failed"),
+
 	CANNOT_UPDATE_IMAGE(HttpStatus.CONFLICT, "Cannot update images"),
 
 	FAILED_TO_SEND_OTP(HttpStatus.NOT_FOUND, "Failed to send OTP"),
+
 	EXPIRED_OTP(HttpStatus.BAD_REQUEST, "Expired OTP"),
+
 	INVALID_OTP(HttpStatus.BAD_REQUEST, "Invalid OTP"),
+
 	OTP_NOT_FOUND(HttpStatus.NOT_FOUND, "OTP not found"),
 	;
 	private final HttpStatus status;
