@@ -8,6 +8,8 @@ public class ApiException extends RuntimeException {
 	private final ErrorCode code;
 	private Boolean isLoggingEnabled = false;
 
+	private Boolean isLogged;
+
 	public ApiException(ErrorCode code) {
 		this(code, code.getMessage(), null);
 	}
@@ -27,6 +29,11 @@ public class ApiException extends RuntimeException {
 
 	public ApiException setLoggingEnabled(boolean enabled) {
 		this.isLoggingEnabled = enabled;
+		return this;
+	}
+
+	public ApiException enableLogged() {
+		isLogged = true;
 		return this;
 	}
 }

@@ -52,14 +52,6 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-		if (userRepository.existsByUsername(loginRequest.getUsername())) {
-			throw new ApiException(ErrorCode.USER_NOT_FOUND);
-		}
-
-		if (userRepository.existsByUsername(loginRequest.getPassword())) {
-			throw new ApiException(ErrorCode.WRONG_PASSWORD);
-		}
-
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
