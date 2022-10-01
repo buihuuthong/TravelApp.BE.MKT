@@ -9,12 +9,18 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -141,5 +147,26 @@ public class TourController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping(
+            value = "/tours/image",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public byte[] getImage(@RequestParam("id") String id) throws IOException {
+        Optional<Tour> tourData = tourRepository.findById(id);
+
+        if (!tourRepository.existsById(id))
+            throw new ApiException(ErrorCode.TOUR_NOT_FOUND);
+
+        if (tourData.isPresent()) {
+            Tour _tour = tourData.get();
+            Path filePath = Paths.get("images/"+ _tour.getBanner());
+            if (Files.exists(filePath) && !Files.isDirectory(filePath)) {
+                InputStream in = Files.newInputStream(filePath, StandardOpenOption.READ);
+                return in.readAllBytes();
+        }
+    }
+        return new byte[0];
     }
 }
