@@ -36,6 +36,7 @@ public class UserController {
     public User PutUser(@RequestBody User user, Principal principal)
     {
         User oldUser = userRepository.findByUsername(authService.getUsername(principal)).orElse(null);
+        assert oldUser != null;
         oldUser.setUsername(user.getUsername());
         oldUser.setEmail(user.getEmail());
         oldUser.setPhoneNumber(user.getPhoneNumber());
