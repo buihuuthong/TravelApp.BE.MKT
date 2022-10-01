@@ -25,22 +25,28 @@ public class UserController {
     @Autowired
     AuthService authService;
 
-    @GetMapping("/getAccountInformation")
+    @GetMapping("/my")
     @ApiResponses(@ApiResponse(code = 404, message = "USER_NOT_FOUND"))
-    public User GetUser(Principal principal) {
+    public User getMyUser(Principal principal) {
         String getUsername = authService.getUsername(principal);
         return userRepository.findByUsername(getUsername).orElse(null);
     }
 
-    @PutMapping("/updateAccountInformation")
-    public User PutUser(@RequestBody User user, Principal principal)
+    @PutMapping("/my")
+    public User updateMyUser(@RequestBody User user, Principal principal)
     {
         User oldUser = userRepository.findByUsername(authService.getUsername(principal)).orElse(null);
         oldUser.setUsername(user.getUsername());
         oldUser.setEmail(user.getEmail());
         oldUser.setPhoneNumber(user.getPhoneNumber());
-        oldUser.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(oldUser);
     }
 
+    @PutMapping("/password")
+    public User updateMyPassword(@RequestBody String password, Principal principal)
+    {
+        User oldUser = userRepository.findByUsername(authService.getUsername(principal)).orElse(null);
+        oldUser.setPassword(encoder.encode(password));
+        return userRepository.save(oldUser);
+    }
 }
