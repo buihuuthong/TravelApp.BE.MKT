@@ -16,6 +16,8 @@ public class UserDetailsImpl implements UserDetails {
 
 	private String id;
 
+	private String fullName;
+
 	private String username;
 
 	private String email;
@@ -27,9 +29,10 @@ public class UserDetailsImpl implements UserDetails {
 
 	private String phoneNumber;
 
-	public UserDetailsImpl(String id, String username, String email, String password,
+	public UserDetailsImpl(String id, String fullName, String username, String email, String password,
 			Collection<? extends GrantedAuthority> authorities, String phoneNumber) {
 		this.id = id;
+		this.fullName = fullName;
 		this.username = username;
 		this.email = email;
 		this.password = password;
@@ -43,7 +46,8 @@ public class UserDetailsImpl implements UserDetails {
 				.collect(Collectors.toList());
 
 		return new UserDetailsImpl(
-				user.getId(), 
+				user.getId(),
+				user.getFullName(),
 				user.getUsername(), 
 				user.getEmail(),
 				user.getPassword(), 
@@ -59,6 +63,8 @@ public class UserDetailsImpl implements UserDetails {
 	public String getId() {
 		return id;
 	}
+
+	public String getFullName() { return  fullName;}
 
 	public String getEmail() {
 		return email;

@@ -14,6 +14,9 @@ import java.util.Set;
 public class User {
   @Id
   private String id;
+  @NotBlank
+  @Size(max = 20)
+  private String fullName;
 
   @NotBlank
   @Size(max = 20)
@@ -37,7 +40,8 @@ public class User {
   public User() {
   }
 
-  public User(String username, String email, String password, String phoneNumber) {
+  public User(String fullName, String username, String email, String password, String phoneNumber) {
+    this.fullName = fullName;
     this.username = username;
     this.email = email;
     this.password = password;
@@ -50,6 +54,14 @@ public class User {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
   }
 
   public String getUsername() {

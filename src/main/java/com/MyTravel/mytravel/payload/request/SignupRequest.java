@@ -7,6 +7,10 @@ import javax.validation.constraints.*;
 public class SignupRequest {
     @NotBlank
     @Size(min = 3, max = 20)
+    private String fullName;
+
+    @NotBlank
+    @Size(min = 3, max = 20)
     private String username;
 
     @NotBlank
@@ -23,6 +27,14 @@ public class SignupRequest {
     @NotBlank
     @Size(max = 10)
     private String phoneNumber;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public String getUsername() {
         return username;

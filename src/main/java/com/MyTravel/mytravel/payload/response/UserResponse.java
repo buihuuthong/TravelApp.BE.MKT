@@ -6,15 +6,18 @@ public class UserResponse {
 	private String token;
 	private String type = "Bearer";
 	private String id;
+
+	private String fullName;
 	private String username;
 	private String email;
 	private List<String> roles;
 
 	private String phoneNumber;
 
-	public UserResponse(String accessToken, String id, String username, String email, String phoneNumber, List<String> roles) {
+	public UserResponse(String accessToken, String id, String fullName, String username, String email, String phoneNumber, List<String> roles) {
 		this.token = accessToken;
 		this.id = id;
+		this.fullName = fullName;
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
@@ -43,6 +46,14 @@ public class UserResponse {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getEmail() {

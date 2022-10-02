@@ -4,14 +4,17 @@ import java.util.List;
 
 public class UserInfoResponse {
     private String id;
+
+    private String fullName;
     private String username;
     private String email;
     private List<String> roles;
 
     private String phone;
 
-    public UserInfoResponse(String id, String username, String email, String phone, List<String> roles) {
+    public UserInfoResponse(String id, String fullName, String username, String email, String phone, List<String> roles) {
         this.id = id;
+        this.fullName = fullName;
         this.username = username;
         this.email = email;
         this.roles = roles;
@@ -24,6 +27,14 @@ public class UserInfoResponse {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {

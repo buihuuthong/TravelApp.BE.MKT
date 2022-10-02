@@ -64,7 +64,8 @@ public class AuthController {
 				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(new UserResponse(jwt,
-												 userDetails.getId(), 
+												 userDetails.getId(),
+												 userDetails.getFullName(),
 												 userDetails.getUsername(), 
 												 userDetails.getEmail(),
 												 userDetails.getPhoneNumber(),
@@ -90,9 +91,10 @@ public class AuthController {
 		}
 
 		// Create new user's account
-		User user = new User(signUpRequest.getUsername(),
-							 signUpRequest.getEmail(),
-							 encoder.encode(signUpRequest.getPassword()),
+		User user = new User(signUpRequest.getFullName(),
+							signUpRequest.getUsername(),
+							signUpRequest.getEmail(),
+							encoder.encode(signUpRequest.getPassword()),
 							signUpRequest.getPhoneNumber()
 							);
 
