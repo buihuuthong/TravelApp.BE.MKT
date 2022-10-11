@@ -1,9 +1,11 @@
 package com.MyTravel.mytravel.controller;
 
+import com.MyTravel.mytravel.model.*;
 import com.MyTravel.mytravel.exception.ApiException;
 import com.MyTravel.mytravel.exception.ErrorCode;
-import com.MyTravel.mytravel.model.Tour;
+import com.MyTravel.mytravel.payload.request.TourRequest;
 import com.MyTravel.mytravel.repository.TourRepository;
+import com.MyTravel.mytravel.repository.TourTypeRepository;
 import com.MyTravel.mytravel.security.services.ImageService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -21,9 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -32,6 +32,10 @@ public class TourController {
 
     @Autowired
     TourRepository tourRepository;
+
+    @Autowired
+
+    TourTypeRepository tourTypeRepository;
 
     @Autowired
     ImageService imageService;
@@ -75,19 +79,57 @@ public class TourController {
 
     @PostMapping("/tours")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Tour> createTour(@RequestBody Tour tour) {
+    public ResponseEntity<Tour> createTour(@RequestBody TourRequest tourRequest) {
         try {
-            Tour _tour = tourRepository.save(new Tour(
-                    tour.getTourName(),
-                    tour.getBanner(),
-                    tour.getIntroduce(),
-                    tour.getTourPlan(),
-                    tour.getTourTime(),
-                    tour.getPhone(),
-                    tour.getRating(),
-                    tour.getBasePrice()));
-            return new ResponseEntity<>(_tour, HttpStatus.CREATED);
+            Tour tour = tourRepository.save(new Tour(
+                    tourRequest.getTourName(),
+                    tourRequest.getBanner(),
+                    tourRequest.getIntroduce(),
+                    tourRequest.getTourPlan(),
+                    tourRequest.getTourTime(),
+                    tourRequest.getPhone(),
+                    tourRequest.getRating(),
+                    tourRequest.getBasePrice()));
+
+            Set<String> strTypes = tourRequest.getTypes();
+            Set<TourType> types = new HashSet<>();
+            if (strTypes == null) {
+                TourType type = tourTypeRepository.findByName(Type.NORMAL)
+                        .orElseThrow(() -> new RuntimeException("Error: Type is not found."));
+                types.add(type);
+            }
+            else {
+                strTypes.forEach(type -> {
+                    switch (type) {
+                        case "sea":
+                            TourType sea = tourTypeRepository.findByName(Type.SEA)
+                                    .orElseThrow(() -> new RuntimeException("Error: Type is not found."));
+                            types.add(sea);
+
+                            break;
+                        case "mount":
+                            TourType mount = tourTypeRepository.findByName(Type.MOUNT)
+                                    .orElseThrow(() -> new RuntimeException("Error: Type is not found."));
+                            types.add(mount);
+
+                            break;
+                        case "nature":
+                            TourType nature = tourTypeRepository.findByName(Type.NATURE)
+                                    .orElseThrow(() -> new RuntimeException("Error: Type is not found."));
+                            types.add(nature);
+                            break;
+                        default:
+                            TourType normal = tourTypeRepository.findByName(Type.NORMAL)
+                                    .orElseThrow(() -> new RuntimeException("Error: Type is not found."));
+                            types.add(normal);
+                    }
+                });
+            }
+            tour.setTypes(types);
+            tourRepository.save(tour);
+            return new ResponseEntity<>(tour, HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

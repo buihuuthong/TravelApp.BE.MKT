@@ -1,24 +1,14 @@
-package com.MyTravel.mytravel.model;
+package com.MyTravel.mytravel.payload.request;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
+import com.MyTravel.mytravel.model.TourType;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-
-@Getter
-@Setter
-@Document(collection = "tours")
-public class Tour {
-
-    @Id
-    private String id;
+public class TourRequest {
 
     @NotBlank
     private String tourName;
@@ -44,25 +34,7 @@ public class Tour {
     private BigDecimal basePrice;
 
     @DBRef
-    private Set<TourType> types = new HashSet<>();
-
-    public Tour() {
-    }
-
-    public Tour(String tourName, String banner, String introduce, String rating, String tourPlan, String phone, String tourTime, BigDecimal basePrice) {
-        this.tourName = tourName;
-        this.banner = banner;
-        this.introduce = introduce;
-        this.tourPlan = tourPlan;
-        this.tourTime = tourTime;
-        this.phone = phone;
-        this.rating = rating;
-        this.basePrice = basePrice;
-    }
-
-    public String getId() {
-        return id;
-    }
+    private Set<String> types;
 
     public String getTourName() {
         return tourName;
@@ -128,11 +100,11 @@ public class Tour {
         this.basePrice = basePrice;
     }
 
-    public Set<TourType> getTypes() {
+    public Set<String> getTypes() {
         return types;
     }
 
-    public void setTypes(Set<TourType> types) {
+    public void setTypes(Set<String> types) {
         this.types = types;
     }
 }
