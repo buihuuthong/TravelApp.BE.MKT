@@ -152,6 +152,7 @@ public class TourController {
             _tour.setPhone(tour.getPhone());
             _tour.setRating(tour.getRating());
             _tour.setBasePrice(tour.getBasePrice());
+            _tour.setTypes(tour.getTypes());
             return new ResponseEntity<>(tourRepository.save(_tour), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
