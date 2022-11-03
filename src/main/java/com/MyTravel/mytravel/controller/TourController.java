@@ -145,7 +145,6 @@ public class TourController {
         if (tourData.isPresent()) {
             Tour _tour = tourData.get();
             _tour.setTourName(tour.getTourName());
-            _tour.setBanner(tour.getBanner());
             _tour.setIntroduce(tour.getIntroduce());
             _tour.setTourPlan(tour.getTourPlan());
             _tour.setTourTime(tour.getTourTime());
