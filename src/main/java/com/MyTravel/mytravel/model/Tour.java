@@ -47,6 +47,9 @@ public class Tour {
     @DBRef
     private Set<TourType> types = new HashSet<>();
 
+    public Tour() {
+    }
+
     public Tour(String banner, String tourName, String tourPlace, String introduce, String tourPlan, String phone, String rating, BigDecimal basePrice) {
         this.banner = banner;
         this.tourName = tourName;
@@ -60,10 +63,6 @@ public class Tour {
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getBanner() {
