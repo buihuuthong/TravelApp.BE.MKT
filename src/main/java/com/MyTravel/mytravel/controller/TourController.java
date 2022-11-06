@@ -82,11 +82,11 @@ public class TourController {
     public ResponseEntity<Tour> createTour(@RequestBody TourRequest tourRequest) {
         try {
             Tour tour = tourRepository.save(new Tour(
-                    tourRequest.getTourName(),
                     tourRequest.getBanner(),
+                    tourRequest.getTourName(),
+                    tourRequest.getTourPlace(),
                     tourRequest.getIntroduce(),
                     tourRequest.getTourPlan(),
-                    tourRequest.getTourTime(),
                     tourRequest.getPhone(),
                     tourRequest.getRating(),
                     tourRequest.getBasePrice()));
@@ -145,9 +145,9 @@ public class TourController {
         if (tourData.isPresent()) {
             Tour _tour = tourData.get();
             _tour.setTourName(tour.getTourName());
+            _tour.setTourPlace(tour.getTourPlace());
             _tour.setIntroduce(tour.getIntroduce());
             _tour.setTourPlan(tour.getTourPlan());
-            _tour.setTourTime(tour.getTourTime());
             _tour.setPhone(tour.getPhone());
             _tour.setRating(tour.getRating());
             _tour.setBasePrice(tour.getBasePrice());

@@ -11,38 +11,31 @@ import java.util.Set;
 public class TourRequest {
 
     @NotBlank
+    private String banner;
+
+    @NotBlank
     private String tourName;
 
     @NotBlank
-    private String banner;
+    private  String tourPlace;
 
     @NotBlank
     private String introduce;
 
     @NotBlank
-    private String rating;
-
-    @NotBlank
     private String tourPlan;
 
+    @NotBlank
     private String phone;
 
     @NotBlank
-    private String tourTime;
+    private String rating;
 
     @NotBlank
     private BigDecimal basePrice;
 
     @DBRef
     private Set<String> types;
-
-    public String getTourName() {
-        return tourName;
-    }
-
-    public void setTourName(String tourName) {
-        this.tourName = tourName;
-    }
 
     public String getBanner() {
         return banner;
@@ -52,20 +45,28 @@ public class TourRequest {
         this.banner = banner;
     }
 
+    public String getTourName() {
+        return tourName;
+    }
+
+    public void setTourName(String tourName) {
+        this.tourName = tourName;
+    }
+
+    public String getTourPlace() {
+        return tourPlace;
+    }
+
+    public void setTourPlace(String tourPlace) {
+        this.tourPlace = tourPlace;
+    }
+
     public String getIntroduce() {
         return introduce;
     }
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
     }
 
     public String getTourPlan() {
@@ -84,12 +85,12 @@ public class TourRequest {
         this.phone = phone;
     }
 
-    public String getTourTime() {
-        return tourTime;
+    public String getRating() {
+        return rating;
     }
 
-    public void setTourTime(String tourTime) {
-        this.tourTime = tourTime;
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public BigDecimal getBasePrice() {

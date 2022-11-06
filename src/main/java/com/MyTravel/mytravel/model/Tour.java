@@ -21,24 +21,25 @@ public class Tour {
     private String id;
 
     @NotBlank
+    private String banner;
+
+    @NotBlank
     private String tourName;
 
     @NotBlank
-    private String banner;
+    private String tourPlace;
 
     @NotBlank
     private String introduce;
 
     @NotBlank
-    private String rating;
-
-    @NotBlank
     private String tourPlan;
 
+    @NotBlank
     private String phone;
 
     @NotBlank
-    private String tourTime;
+    private String rating;
 
     @NotBlank
     private BigDecimal basePrice;
@@ -46,15 +47,12 @@ public class Tour {
     @DBRef
     private Set<TourType> types = new HashSet<>();
 
-    public Tour() {
-    }
-
-    public Tour(String tourName, String banner, String introduce, String rating, String tourPlan, String phone, String tourTime, BigDecimal basePrice) {
-        this.tourName = tourName;
+    public Tour(String banner, String tourName, String tourPlace, String introduce, String tourPlan, String phone, String rating, BigDecimal basePrice) {
         this.banner = banner;
+        this.tourName = tourName;
+        this.tourPlace = tourPlace;
         this.introduce = introduce;
         this.tourPlan = tourPlan;
-        this.tourTime = tourTime;
         this.phone = phone;
         this.rating = rating;
         this.basePrice = basePrice;
@@ -64,12 +62,8 @@ public class Tour {
         return id;
     }
 
-    public String getTourName() {
-        return tourName;
-    }
-
-    public void setTourName(String tourName) {
-        this.tourName = tourName;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getBanner() {
@@ -80,20 +74,28 @@ public class Tour {
         this.banner = banner;
     }
 
+    public String getTourName() {
+        return tourName;
+    }
+
+    public void setTourName(String tourName) {
+        this.tourName = tourName;
+    }
+
+    public String getTourPlace() {
+        return tourPlace;
+    }
+
+    public void setTourPlace(String tourPlace) {
+        this.tourPlace = tourPlace;
+    }
+
     public String getIntroduce() {
         return introduce;
     }
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
     }
 
     public String getTourPlan() {
@@ -112,12 +114,12 @@ public class Tour {
         this.phone = phone;
     }
 
-    public String getTourTime() {
-        return tourTime;
+    public String getRating() {
+        return rating;
     }
 
-    public void setTourTime(String tourTime) {
-        this.tourTime = tourTime;
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public BigDecimal getBasePrice() {

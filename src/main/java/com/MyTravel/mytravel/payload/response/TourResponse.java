@@ -7,36 +7,33 @@ public class TourResponse {
 
     private String id;
 
-    private String tourName;
-
     private String banner;
 
-    private String listImage;
+    private String tourName;
+
+    private String tourPlace;
 
     private String introduce;
-
-    private String rating;
 
     private String tourPlan;
 
     private String phone;
 
-    private String tourTime;
+    private String rating;
 
     private BigDecimal basePrice;
 
     private List<String> tourTypes;
 
-    public TourResponse(String id, String tourName, String banner, String listImage, String introduce, String rating, String tourPlan, String phone, String tourTime, BigDecimal basePrice, List<String> tourTypes) {
+    public TourResponse(String id, String banner, String tourName, String tourPlace, String introduce, String tourPlan, String phone, String rating, BigDecimal basePrice, List<String> tourTypes) {
         this.id = id;
-        this.tourName = tourName;
         this.banner = banner;
-        this.listImage = listImage;
+        this.tourName = tourName;
+        this.tourPlace = tourPlace;
         this.introduce = introduce;
-        this.rating = rating;
         this.tourPlan = tourPlan;
         this.phone = phone;
-        this.tourTime = tourTime;
+        this.rating = rating;
         this.basePrice = basePrice;
         this.tourTypes = tourTypes;
     }
