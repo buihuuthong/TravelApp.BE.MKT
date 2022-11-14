@@ -25,6 +25,8 @@ public enum ErrorCode {
 
 	PHONE_NOT_FOUND(HttpStatus.NOT_FOUND, "Phone not found"),
 	TOUR_NOT_FOUND(HttpStatus.NOT_FOUND, "Tour not found"),
+	BOOK_TOUR_NOT_FOUND(HttpStatus.NOT_FOUND, "Tour book not found"),
+
 	USERNAME_ALREADY_EXIST(HttpStatus.CONFLICT, "Username is already exists"),
 	PHONE_ALREADY_EXIST(HttpStatus.CONFLICT, "Phone is already exists"),
 	EMAIL_ALREADY_EXIST(HttpStatus.CONFLICT, "Email is already exists"),

@@ -7,6 +7,7 @@ import com.MyTravel.mytravel.security.services.AuthService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class UserController {
     AuthService authService;
 
     @GetMapping("/my")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ApiResponses(@ApiResponse(code = 404, message = "USER_NOT_FOUND"))
     public User getMyUser(Principal principal) {
         String getUsername = authService.getUsername(principal);
@@ -33,17 +35,18 @@ public class UserController {
     }
 
     @PutMapping("/my")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public User updateMyUser(@RequestBody User user, Principal principal)
     {
         User oldUser = userRepository.findByUsername(authService.getUsername(principal)).orElse(null);
         oldUser.setFullName(user.getFullName());
-        oldUser.setUsername(user.getUsername());
         oldUser.setEmail(user.getEmail());
         oldUser.setPhoneNumber(user.getPhoneNumber());
         return userRepository.save(oldUser);
     }
 
     @PutMapping("/password")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public User updateMyPassword(@RequestBody String password, Principal principal)
     {
         User oldUser = userRepository.findByUsername(authService.getUsername(principal)).orElse(null);

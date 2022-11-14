@@ -34,7 +34,6 @@ public class TourController {
     TourRepository tourRepository;
 
     @Autowired
-
     TourTypeRepository tourTypeRepository;
 
     @Autowired
