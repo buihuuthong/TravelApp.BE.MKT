@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface BookTourRepository extends MongoRepository<BookTour, String> {
 
     Optional<BookTour> findById(String id);
+
+    List<BookTour> findByIsCanceled(Boolean isCanceled);
 }

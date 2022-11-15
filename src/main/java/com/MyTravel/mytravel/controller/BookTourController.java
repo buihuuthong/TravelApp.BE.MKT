@@ -35,11 +35,17 @@ public class BookTourController {
 
     @GetMapping("/bookTour")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<BookTour>> getAllBookTour() {
+    public ResponseEntity<List<BookTour>> getAllBookTour(@RequestParam(required = false) Boolean isCanceled) {
         try {
             List<BookTour> bookTours = new ArrayList<BookTour>();
 
-            bookTours.addAll(bookTourRepository.findAll());
+            if(isCanceled == null ){
+                bookTours.addAll(bookTourRepository.findAll());
+            } else {
+                bookTours.addAll(bookTourRepository.findByIsCanceled(isCanceled));
+            }
+
+
 
             if (bookTours.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
