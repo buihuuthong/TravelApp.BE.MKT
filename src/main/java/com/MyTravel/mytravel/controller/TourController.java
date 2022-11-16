@@ -42,19 +42,24 @@ public class TourController {
 
     @GetMapping("/tours")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<Tour>> getAllTour(@RequestParam(required = false) String tourName) {
+    public ResponseEntity<List<Tour>> getAllTour(@RequestParam(required = false) Type types) {
         try {
             List<Tour> tours = new ArrayList<Tour>();
 
-            if (tourName == null)
-                tourRepository.findAll().forEach(tours::add);
-            else
-                tourRepository.findByTourName(tourName).forEach(tours::add);
+
+            if (types == null) {
+                tours.addAll(tourRepository.findAll());
+            }
+            else {
+                Optional<TourType> type = tourTypeRepository.findByName(types);
+
+                tours.addAll(tourRepository.findByTypes(type.get().getId()));
+            }
+
 
             if (tours.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
             return new ResponseEntity<>(tours, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -116,6 +121,11 @@ public class TourController {
                             TourType nature = tourTypeRepository.findByName(Type.NATURE)
                                     .orElseThrow(() -> new RuntimeException("Error: Type is not found."));
                             types.add(nature);
+                            break;
+                        case "recommend":
+                            TourType recommend = tourTypeRepository.findByName(Type.RECOMMEND)
+                                    .orElseThrow(() -> new RuntimeException("Error: Type is not found."));
+                            types.add(recommend);
                             break;
                         default:
                             TourType normal = tourTypeRepository.findByName(Type.NORMAL)

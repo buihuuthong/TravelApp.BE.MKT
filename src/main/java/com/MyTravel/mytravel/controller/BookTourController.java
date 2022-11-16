@@ -45,8 +45,6 @@ public class BookTourController {
                 bookTours.addAll(bookTourRepository.findByIsCanceled(isCanceled));
             }
 
-
-
             if (bookTours.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
