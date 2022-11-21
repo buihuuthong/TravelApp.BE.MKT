@@ -32,6 +32,10 @@ public enum ErrorCode {
 	EMAIL_ALREADY_EXIST(HttpStatus.CONFLICT, "Email is already exists"),
 
 	TOUR_ALREADY_EXIST(HttpStatus.CONFLICT, "Tour is already exists"),
+
+	BOOK_TOUR_ALREADY_EXIST(HttpStatus.CONFLICT, "Tour is already book"),
+
+	TOUR_ALREADY_SAVE(HttpStatus.CONFLICT, "Tour already save"),
 	USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User not found"),
 
 	IMAGE_UPLOAD_FAILED(HttpStatus.CONFLICT, "Image upload failed"),

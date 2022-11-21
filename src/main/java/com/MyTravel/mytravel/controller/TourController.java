@@ -138,7 +138,6 @@ public class TourController {
             tourRepository.save(tour);
             return new ResponseEntity<>(tour, HttpStatus.CREATED);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

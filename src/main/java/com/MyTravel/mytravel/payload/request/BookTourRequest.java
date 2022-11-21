@@ -2,7 +2,6 @@ package com.MyTravel.mytravel.payload.request;
 
 import com.MyTravel.mytravel.model.Tour;
 import com.MyTravel.mytravel.model.User;
-import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
 

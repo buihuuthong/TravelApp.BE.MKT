@@ -51,7 +51,6 @@ public class BookTourController {
 
             return new ResponseEntity<>(bookTours, HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -79,13 +78,16 @@ public class BookTourController {
             @RequestBody BookTourRequest bookTourRequest,
             @RequestParam("userId") String userId,
             @RequestParam("tourId") String tourId) {
-        try {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND));
 
             Tour tour = tourRepository.findById(tourId)
                     .orElseThrow(() -> new ApiException(ErrorCode.TOUR_NOT_FOUND));
 
+            if(bookTourRepository.existsByTourId(tourId))
+                throw new ApiException(ErrorCode.BOOK_TOUR_ALREADY_EXIST);
+
+        try {
             var bookTour = new BookTour();
             bookTour.setUser(user);
             bookTour.setTour(tour);
@@ -100,8 +102,7 @@ public class BookTourController {
 
             return new ResponseEntity<>(createBook, HttpStatus.CREATED);
         } catch (Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
