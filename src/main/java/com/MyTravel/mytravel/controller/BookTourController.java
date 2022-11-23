@@ -84,8 +84,8 @@ public class BookTourController {
             Tour tour = tourRepository.findById(tourId)
                     .orElseThrow(() -> new ApiException(ErrorCode.TOUR_NOT_FOUND));
 
-            if(bookTourRepository.existsByTourId(tourId))
-                throw new ApiException(ErrorCode.BOOK_TOUR_ALREADY_EXIST);
+//            if(bookTourRepository.existsByTourId(tourId))
+//                throw new ApiException(ErrorCode.BOOK_TOUR_ALREADY_EXIST);
 
         try {
             var bookTour = new BookTour();
